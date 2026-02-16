@@ -1,0 +1,58 @@
+.work-ledger-summary-list {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.work-ledger-view {
+	padding: 0.75rem;
+}
+
+.work-ledger-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+
+.work-ledger-range-controls {
+	margin: 0.5rem 0 0.75rem;
+}
+
+.work-ledger-chip-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.work-ledger-chip {
+	font-size: 12px;
+	padding: 0.2rem 0.5rem;
+	border-radius: 999px;
+}
+
+.work-ledger-chip.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.work-ledger-custom-range-row {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-top: 0.5rem;
+}
+
+.work-ledger-custom-range-row input[type="date"] {
+	max-width: 145px;
+}
+
+.work-ledger-entry-link {
+	all: unset;
+	cursor: pointer;
+	color: var(--text-normal);
+}
+
+.work-ledger-entry-link:hover {
+	color: var(--text-accent);
+	text-decoration: underline;
+}
