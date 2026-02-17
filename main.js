@@ -307,7 +307,7 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Work ledger settings").setHeading();
+    new import_obsidian.Setting(containerEl).setName("Work ledger options").setHeading();
     new import_obsidian.Setting(containerEl).setName("Category list").setDesc("Comma or newline separated categories used in summaries.").addTextArea((text) => {
       text.setPlaceholder("Meetings, Research/Analysis, Data Requests, Admin").setValue(this.plugin.settings.categories.join(", ")).onChange((value) => {
         void (async () => {
@@ -651,7 +651,7 @@ var WorkLedgerPlugin = class extends import_obsidian3.Plugin {
     const csv = entriesToCsv(entries);
     const targetPath = await this.getAvailableExportPath(defaultExportFileName());
     await this.app.vault.create(targetPath, csv);
-    new import_obsidian3.Notice(`Work Ledger exported ${entries.length} entries to ${targetPath}`);
+    new import_obsidian3.Notice(`Work ledger exported ${entries.length} entries to ${targetPath}`);
   }
   async getAvailableExportPath(initialPath) {
     const adapter = this.app.vault.adapter;
@@ -671,14 +671,14 @@ var WorkLedgerPlugin = class extends import_obsidian3.Plugin {
     const existingLeaf = this.app.workspace.getLeavesOfType(WORK_LEDGER_SUMMARY_VIEW_TYPE)[0];
     const leaf = existingLeaf ?? this.app.workspace.getRightLeaf(false);
     if (!leaf) {
-      new import_obsidian3.Notice("Unable to open Work Ledger view.");
+      new import_obsidian3.Notice("Unable to open work ledger view.");
       return;
     }
     await leaf.setViewState({
       type: WORK_LEDGER_SUMMARY_VIEW_TYPE,
       active: true
     });
-    this.app.workspace.revealLeaf(leaf);
+    void this.app.workspace.revealLeaf(leaf);
   }
   refreshSummaryViews() {
     for (const leaf of this.app.workspace.getLeavesOfType(WORK_LEDGER_SUMMARY_VIEW_TYPE)) {

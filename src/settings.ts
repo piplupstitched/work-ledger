@@ -38,7 +38,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName("Work ledger settings").setHeading();
+		new Setting(containerEl).setName("Work ledger options").setHeading();
 
 		new Setting(containerEl)
 			.setName("Category list")

@@ -152,7 +152,7 @@ export default class WorkLedgerPlugin extends Plugin {
 		const csv = entriesToCsv(entries);
 		const targetPath = await this.getAvailableExportPath(defaultExportFileName());
 		await this.app.vault.create(targetPath, csv);
-		new Notice(`Work Ledger exported ${entries.length} entries to ${targetPath}`);
+		new Notice(`Work ledger exported ${entries.length} entries to ${targetPath}`);
 	}
 
 	private async getAvailableExportPath(initialPath: string): Promise<string> {
@@ -176,7 +176,7 @@ export default class WorkLedgerPlugin extends Plugin {
 		const existingLeaf = this.app.workspace.getLeavesOfType(WORK_LEDGER_SUMMARY_VIEW_TYPE)[0];
 		const leaf = existingLeaf ?? this.app.workspace.getRightLeaf(false);
 		if (!leaf) {
-			new Notice("Unable to open Work Ledger view.");
+			new Notice("Unable to open work ledger view.");
 			return;
 		}
 
@@ -184,7 +184,7 @@ export default class WorkLedgerPlugin extends Plugin {
 			type: WORK_LEDGER_SUMMARY_VIEW_TYPE,
 			active: true
 		});
-		this.app.workspace.revealLeaf(leaf);
+		void this.app.workspace.revealLeaf(leaf);
 	}
 
 	private refreshSummaryViews(): void {
