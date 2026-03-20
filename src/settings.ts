@@ -38,14 +38,14 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName("General").setHeading();
+		new Setting(containerEl).setName("Parsing").setHeading();
 
 		new Setting(containerEl)
 			.setName("Category list")
 			.setDesc("Comma or newline separated categories used in summaries.")
 			.addTextArea((text) => {
 				text
-					.setPlaceholder("Meetings, Research/Analysis, Data Requests, Admin")
+					.setPlaceholder("Meetings, research/analysis, data requests, admin")
 					.setValue(this.plugin.settings.categories.join(", "))
 					.onChange((value) => {
 						void (async () => {

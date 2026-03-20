@@ -307,9 +307,9 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("General").setHeading();
+    new import_obsidian.Setting(containerEl).setName("Parsing").setHeading();
     new import_obsidian.Setting(containerEl).setName("Category list").setDesc("Comma or newline separated categories used in summaries.").addTextArea((text) => {
-      text.setPlaceholder("Meetings, Research/Analysis, Data Requests, Admin").setValue(this.plugin.settings.categories.join(", ")).onChange((value) => {
+      text.setPlaceholder("Meetings, research/analysis, data requests, admin").setValue(this.plugin.settings.categories.join(", ")).onChange((value) => {
         void (async () => {
           const parsed = parseCategoryList(value);
           this.plugin.settings.categories = parsed.length > 0 ? parsed : DEFAULT_SETTINGS.categories;
