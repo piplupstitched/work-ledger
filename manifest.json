@@ -2,7 +2,7 @@
 	"id": "work-ledger",
 	"name": "Work Ledger",
 	"version": "1.0.0",
-	"minAppVersion": "1.0.0",
+	"minAppVersion": "0.15.0",
 	"description": "Structured work logging and performance summaries for knowledge workers.",
 	"author": "Piplup Stitched",
 	"authorUrl": "https://github.com/piplupstitched",
