@@ -307,15 +307,14 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Work ledger options").setHeading();
+    new import_obsidian.Setting(containerEl).setName("General").setHeading();
     new import_obsidian.Setting(containerEl).setName("Category list").setDesc("Comma or newline separated categories used in summaries.").addTextArea((text) => {
       text.setPlaceholder("Meetings, Research/Analysis, Data Requests, Admin").setValue(this.plugin.settings.categories.join(", ")).onChange((value) => {
         void (async () => {
           const parsed = parseCategoryList(value);
           this.plugin.settings.categories = parsed.length > 0 ? parsed : DEFAULT_SETTINGS.categories;
           await this.plugin.saveSettings();
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       });
       text.inputEl.rows = 4;
     });
@@ -324,8 +323,7 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
         void (async () => {
           this.plugin.settings.allowCustomCategories = value;
           await this.plugin.saveSettings();
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       })
     );
     new import_obsidian.Setting(containerEl).setName("Hour rounding increment").setDesc("Round parsed hours to quarter, half, or whole hour.").addDropdown(
@@ -333,8 +331,7 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
         void (async () => {
           this.plugin.settings.hourRoundingIncrement = Number(value);
           await this.plugin.saveSettings();
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       })
     );
     new import_obsidian.Setting(containerEl).setName("Enable date inference").setDesc("Infer date from note frontmatter, filename, or file modified time.").addToggle(
@@ -342,8 +339,7 @@ var WorkLedgerSettingTab = class extends import_obsidian.PluginSettingTab {
         void (async () => {
           this.plugin.settings.enableDateInference = value;
           await this.plugin.saveSettings();
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       })
     );
   }
@@ -541,25 +537,24 @@ var WorkLedgerPlugin = class extends import_obsidian3.Plugin {
     });
     this.addSettingTab(new WorkLedgerSettingTab(this.app, this));
     this.addCommand({
-      id: "work-ledger-open-summary",
+      id: "open-summary",
       name: "Open summary",
       callback: () => {
         void this.activateSummaryView();
       }
     });
     this.addCommand({
-      id: "work-ledger-export-csv",
-      name: "Export csv",
+      id: "export-csv",
+      name: "Export CSV",
       callback: () => {
         void (async () => {
           const entries = await this.collectEntriesAcrossVault();
           await this.exportCsv(entries);
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       }
     });
     this.addCommand({
-      id: "work-ledger-generate-weekly-summary",
+      id: "generate-weekly-summary",
       name: "Generate weekly summary",
       editorCallback: (editor) => {
         void (async () => {
@@ -568,12 +563,11 @@ var WorkLedgerPlugin = class extends import_obsidian3.Plugin {
           const markdown = buildSummaryMarkdown("Weekly work summary", entries, range);
           editor.replaceSelection(`${markdown}
 `);
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       }
     });
     this.addCommand({
-      id: "work-ledger-generate-quarterly-summary",
+      id: "generate-quarterly-summary",
       name: "Generate quarterly summary",
       editorCallback: (editor) => {
         void (async () => {
@@ -583,12 +577,11 @@ var WorkLedgerPlugin = class extends import_obsidian3.Plugin {
           const markdown = buildSummaryMarkdown(title, entries, range);
           editor.replaceSelection(`${markdown}
 `);
-        })().catch(() => {
-        });
+        })().catch((e) => console.error("Work Ledger:", e));
       }
     });
     this.addCommand({
-      id: "work-ledger-insert-work-log-template",
+      id: "insert-work-log-template",
       name: "Insert work log template",
       editorCallback: (editor) => {
         editor.replaceSelection(this.buildWorkLogTemplate());

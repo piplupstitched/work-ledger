@@ -28,7 +28,7 @@ export default class WorkLedgerPlugin extends Plugin {
 		this.addSettingTab(new WorkLedgerSettingTab(this.app, this));
 
 		this.addCommand({
-			id: "work-ledger-open-summary",
+			id: "open-summary",
 			name: "Open summary",
 			callback: () => {
 				void this.activateSummaryView();
@@ -36,18 +36,18 @@ export default class WorkLedgerPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "work-ledger-export-csv",
-			name: "Export csv",
+			id: "export-csv",
+			name: "Export CSV",
 			callback: () => {
 				void (async () => {
 					const entries = await this.collectEntriesAcrossVault();
 					await this.exportCsv(entries);
-				})().catch(() => {});
+				})().catch((e) => console.error("Work Ledger:", e));
 			}
 		});
 
 		this.addCommand({
-			id: "work-ledger-generate-weekly-summary",
+			id: "generate-weekly-summary",
 			name: "Generate weekly summary",
 			editorCallback: (editor) => {
 				void (async () => {
@@ -55,12 +55,12 @@ export default class WorkLedgerPlugin extends Plugin {
 					const range = getCurrentWeekRange();
 					const markdown = buildSummaryMarkdown("Weekly work summary", entries, range);
 					editor.replaceSelection(`${markdown}\n`);
-				})().catch(() => {});
+				})().catch((e) => console.error("Work Ledger:", e));
 			}
 		});
 
 		this.addCommand({
-			id: "work-ledger-generate-quarterly-summary",
+			id: "generate-quarterly-summary",
 			name: "Generate quarterly summary",
 			editorCallback: (editor) => {
 				void (async () => {
@@ -69,12 +69,12 @@ export default class WorkLedgerPlugin extends Plugin {
 					const title = `${quarterLabel(range)} work summary`;
 					const markdown = buildSummaryMarkdown(title, entries, range);
 					editor.replaceSelection(`${markdown}\n`);
-				})().catch(() => {});
+				})().catch((e) => console.error("Work Ledger:", e));
 			}
 		});
 
 		this.addCommand({
-			id: "work-ledger-insert-work-log-template",
+			id: "insert-work-log-template",
 			name: "Insert work log template",
 			editorCallback: (editor) => {
 				editor.replaceSelection(this.buildWorkLogTemplate());

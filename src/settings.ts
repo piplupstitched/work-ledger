@@ -38,7 +38,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName("Work ledger options").setHeading();
+		new Setting(containerEl).setName("General").setHeading();
 
 		new Setting(containerEl)
 			.setName("Category list")
@@ -52,7 +52,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 							const parsed = parseCategoryList(value);
 							this.plugin.settings.categories = parsed.length > 0 ? parsed : DEFAULT_SETTINGS.categories;
 							await this.plugin.saveSettings();
-						})().catch(() => {});
+						})().catch((e) => console.error("Work Ledger:", e));
 					});
 				text.inputEl.rows = 4;
 			});
@@ -65,7 +65,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 					void (async () => {
 						this.plugin.settings.allowCustomCategories = value;
 						await this.plugin.saveSettings();
-					})().catch(() => {});
+					})().catch((e) => console.error("Work Ledger:", e));
 				})
 			);
 
@@ -82,7 +82,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 						void (async () => {
 							this.plugin.settings.hourRoundingIncrement = Number(value);
 							await this.plugin.saveSettings();
-						})().catch(() => {});
+						})().catch((e) => console.error("Work Ledger:", e));
 					})
 			);
 
@@ -94,7 +94,7 @@ export class WorkLedgerSettingTab extends PluginSettingTab {
 					void (async () => {
 						this.plugin.settings.enableDateInference = value;
 						await this.plugin.saveSettings();
-					})().catch(() => {});
+					})().catch((e) => console.error("Work Ledger:", e));
 				})
 			);
 	}
